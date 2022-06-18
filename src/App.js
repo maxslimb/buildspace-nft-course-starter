@@ -15,6 +15,7 @@ const CONTRACT_ADDRESS = "0xF036C1546CcD4E61ca3535b12FdF0AeB5297B6dC";
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [currenttxn, setCurrenttxn] = useState("false");
+  const [TotalNftSold, setTotalNftSold] = useState(0);
 
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -32,6 +33,7 @@ const App = () => {
       const account = accounts[0];
       console.log("Found an authorized account:", account);
       setCurrentAccount(account);
+      TotalNftMintedSofar();
       setupEventListener();
     } else {
       console.log("No authorized account found");
@@ -107,7 +109,7 @@ const App = () => {
         await nftTxn.wait();
         setCurrenttxn("false")
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
-  
+        TotalNftMintedSofar();
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -125,10 +127,13 @@ const App = () => {
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
 
-        var TotalNfts = connectedContract.methods.getTotalNFTsMintedSoFar()
+        await connectedContract.getTotalNFTsMintedSoFar().then((TotalNfts)=>{
+          console.log("Total Nfts Sold", TotalNfts.toNumber())
+          setTotalNftSold(TotalNfts.toNumber())
+        })
 
-        console.log("Total Nfts", TotalNfts.toNumber())
-        return TotalNfts.toNumber()
+       
+        //return TotalNfts.toNumber()
 
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -158,7 +163,9 @@ const App = () => {
           <p className="sub-text">
             Unique NFT for the Outgoing Class!
           </p>
-          <p>Total Nfts Sold {TotalNftMintedSofar}/120</p>
+          { TotalNftSold === 0 ? <p></p> : 
+          (<p className="sub-text">Total Nfts Sold {TotalNftSold}/120</p>)
+            }
           {currenttxn === "false" ? (
             <p></p>
           ) : (
@@ -176,16 +183,13 @@ const App = () => {
             </button>
           )}
         </div>
-        <div className="footer-container">
         <a
-            className="footer-text"
-            href={OPENSEA_LINK}
-            target="_blank"
-            rel="noreferrer">
-        
-        🌊 View Collection on OpenSea
-            
-            </a>
+           href={OPENSEA_LINK}
+           target="_blank"
+           rel="noreferrer">
+            <button  className="opensea-button">🌊 View Collection on OpenSea</button>
+        </a>
+        <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
             className="footer-text"

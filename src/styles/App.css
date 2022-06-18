@@ -48,6 +48,22 @@
   color: white;
 }
 
+.opensea-button {
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: -webkit-linear-gradient(left, #1868B7, #1868B7);
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+}
+
 .connect-wallet-button {
   background: -webkit-linear-gradient(left, #60c657, #35aee2);
   background-size: 200% 200%;
@@ -61,9 +77,6 @@
   margin-right: 15px;
 }
 
-.opensea-button {
-  background-color: rgb(32, 129, 226);
-}
 
 .mint-count {
   color: white;
