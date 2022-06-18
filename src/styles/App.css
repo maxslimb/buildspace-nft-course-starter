@@ -71,6 +71,11 @@
   font-weight: bold;
 }
 
+.loader{
+  width: 150px;
+  height: 150px;
+}
+
 .footer-container {
   display: flex;
   justify-content: center;
