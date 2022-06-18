@@ -8,7 +8,7 @@ import myEpicNft from './utils/MyEpicNFT.json';
 const TWITTER_HANDLE = 'Kishan';
 const TWITTER_LINK = 'https://twitter.com/maxslimb';
 const OPENSEA_LINK = 'https://testnets.opensea.io/collection/class-of-2022-qpdb1irrjr';
-const TOTAL_MINT_COUNT = 50;
+const TOTAL_MINT_COUNT = 100;
 
 const CONTRACT_ADDRESS = "0xF036C1546CcD4E61ca3535b12FdF0AeB5297B6dC";
 
@@ -164,7 +164,7 @@ const App = () => {
             Unique NFT for the Outgoing Class!
           </p>
           { TotalNftSold === 0 ? <p></p> : 
-          (<p className="sub-text">Total Nfts Sold {TotalNftSold}/120</p>)
+          (<p className="sub-text">Total Nfts Sold {TotalNftSold}/{TOTAL_MINT_COUNT}</p>)
             }
           {currenttxn === "false" ? (
             <p></p>
