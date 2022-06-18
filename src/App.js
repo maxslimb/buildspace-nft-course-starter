@@ -10,7 +10,7 @@ const TWITTER_LINK = 'https://twitter.com/maxslimb';
 const OPENSEA_LINK = 'https://testnets.opensea.io/collection/class-of-2022-qpdb1irrjr';
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x9CA1b91F563eD06E238C7628E99aBe8C84a2871B";
+const CONTRACT_ADDRESS = "0xF036C1546CcD4E61ca3535b12FdF0AeB5297B6dC";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -116,6 +116,28 @@ const App = () => {
     }
   }
 
+  const TotalNftMintedSofar = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+
+        var TotalNfts = connectedContract.methods.getTotalNFTsMintedSoFar()
+
+        console.log("Total Nfts", TotalNfts.toNumber())
+        return TotalNfts.toNumber()
+
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // Render Methods
   const renderNotConnectedContainer = () => (
     <button onClick={connectWallet} className="cta-button connect-wallet-button">
@@ -136,7 +158,7 @@ const App = () => {
           <p className="sub-text">
             Unique NFT for the Outgoing Class!
           </p>
-          
+          <p>Total Nfts Sold {TotalNftMintedSofar}/120</p>
           {currenttxn === "false" ? (
             <p></p>
           ) : (
